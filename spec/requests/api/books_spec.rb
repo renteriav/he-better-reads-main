@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 RSpec.describe '/api/books' do
   let(:response_hash) { JSON(response.body, symbolize_names: true) }
+  let(:user) { create(:user) }
 
   describe 'GET to /' do
     it 'returns all books' do
@@ -56,6 +59,10 @@ RSpec.describe '/api/books' do
   end
 
   describe 'POST to /' do
+    before do
+      login_with_api(user)
+      @headers = {'Authorization': response.headers['Authorization']}
+    end
     context 'when successful' do
       let(:author) { create(:author) }
       let(:params) do
@@ -67,11 +74,11 @@ RSpec.describe '/api/books' do
       end
 
       it 'creates a book' do
-        expect { post api_books_path, params: params }.to change { Book.count }
+        expect { post '/api/books', params: params, headers: @headers }.to change(Book, :count)
       end
 
       it 'returns the created book' do
-        post api_books_path, params: params
+        post '/api/books', params: params, headers: @headers
 
         expect(response_hash).to include(params)
       end
@@ -87,7 +94,7 @@ RSpec.describe '/api/books' do
       end
 
       it 'returns an error' do
-        post api_books_path, params: params
+        post '/api/books', params: params, headers: @headers
 
         expect(response_hash).to eq(
           {
@@ -100,6 +107,10 @@ RSpec.describe '/api/books' do
 
   describe 'PUT to /:id' do
     let(:book) { create(:book) }
+    before do
+      login_with_api(user)
+      @headers = {'Authorization': response.headers['Authorization']}
+    end
 
     context 'when successful' do
       let(:params) do
@@ -109,13 +120,13 @@ RSpec.describe '/api/books' do
       end
 
       it 'updates an existing book' do
-        put api_book_path(book), params: params
+        put "/api/books/#{book.id}", params: params, headers: @headers
 
         expect(book.reload.description).to eq(params[:description])
       end
 
       it 'returns the updated book' do
-        put api_book_path(book), params: params
+        put "/api/books/#{book.id}", params: params, headers: @headers
 
         expect(response_hash).to include(params)
       end
@@ -129,7 +140,7 @@ RSpec.describe '/api/books' do
       end
 
       it 'returns an error' do
-        put api_book_path(book), params: params
+        put "/api/books/#{book.id}", params: params, headers: @headers
 
         expect(response_hash).to eq(
           {

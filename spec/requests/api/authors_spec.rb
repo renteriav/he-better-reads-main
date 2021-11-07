@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 RSpec.describe '/api/authors' do
   let(:response_hash) { JSON(response.body, symbolize_names: true) }
+  let(:user) { create(:user) }
 
   describe 'GET to /' do
     it 'returns all authors' do
@@ -56,6 +59,10 @@ RSpec.describe '/api/authors' do
   end
 
   describe 'POST to /' do
+    before do
+      login_with_api(user)
+      @headers = {'Authorization': response.headers['Authorization']}
+    end
     context 'when successful' do
       let(:params) do
         {
@@ -68,11 +75,11 @@ RSpec.describe '/api/authors' do
       end
 
       it 'creates an author' do
-        expect { post api_authors_path, params: params }.to change { Author.count }
+        expect { post '/api/authors', params: params, headers: @headers }.to change(Author, :count)
       end
 
       it 'returns the created author' do
-        post api_authors_path, params: params
+        post '/api/authors', params: params, headers: @headers
 
         expect(response_hash).to include(params)
       end
@@ -82,13 +89,20 @@ RSpec.describe '/api/authors' do
       let(:params) {}
 
       it 'returns an error' do
-        post api_authors_path, params: params
+        post '/api/authors', params: params, headers: @headers
 
         expect(response_hash).to eq(
           {
             errors: ['Description can\'t be blank']
           }
         )
+      end
+    end
+
+    context 'When the Authorization header is missing' do
+      it 'returns 401' do
+        post '/api/authors'
+        expect(response.status).to eq(401)
       end
     end
   end
@@ -97,6 +111,10 @@ RSpec.describe '/api/authors' do
     let(:author) { create(:author) }
 
     context 'when successful' do
+      before do
+        login_with_api(user)
+        @headers = {'Authorization': response.headers['Authorization']}
+      end
       let(:params) do
         {
           description: 'I do not like green eggs and ham'
@@ -104,19 +122,22 @@ RSpec.describe '/api/authors' do
       end
 
       it 'updates an existing author' do
-        put api_author_path(author), params: params
+        put "/api/authors/#{author.id}", params: params, headers: @headers
 
         expect(author.reload.description).to eq(params[:description])
       end
 
       it 'returns the updated author' do
-        put api_author_path(author), params: params
-
+        put "/api/authors/#{author.id}", params: params, headers: @headers
         expect(response_hash).to include(params)
       end
     end
 
     context 'when unsuccessful' do
+      before do
+        login_with_api(user)
+        @headers = {'Authorization': response.headers['Authorization']}
+      end
       let(:params) do
         {
           description: ''
@@ -124,13 +145,20 @@ RSpec.describe '/api/authors' do
       end
 
       it 'returns an error' do
-        put api_author_path(author), params: params
+        put "/api/authors/#{author.id}", params: params, headers: @headers
 
         expect(response_hash).to eq(
           {
             errors: ['Description can\'t be blank']
           }
         )
+      end
+    end
+
+    context 'When the Authorization header is missing' do
+      it 'returns 401' do
+        put "/api/authors/#{author.id}"
+        expect(response.status).to eq(401)
       end
     end
   end
