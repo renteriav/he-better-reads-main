@@ -37,7 +37,7 @@ class Review < ApplicationRecord
 
   scope :with_rating, ->(rating) { where(rating: rating) }
   scope :sort_by_rating, ->(order='desc') { reorder(:rating => order) }
-  scope :with_description, -> { where("description <> ''") }
+  scope :with_description_only, -> { where("description <> ''") }
 
   after_save :update_average
   after_destroy :update_average
