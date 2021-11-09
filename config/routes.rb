@@ -17,5 +17,13 @@ Rails.application.routes.draw do
     resources :authors, only: %i[create index show update]
     resources :books, only: %i[create index show update]
     resources :users, only: %i[create index show update]
+
+    resources :authors do
+      resources :reviews, only: %i[create index show update]
+    end
+
+    resources :books do
+      resources :reviews, only: %i[create index show update]
+    end
   end
 end

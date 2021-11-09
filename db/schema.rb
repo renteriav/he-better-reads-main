@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_06_205611) do
+ActiveRecord::Schema.define(version: 2021_11_08_214718) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 2021_11_06_205611) do
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "reviews_count"
+    t.float "average_rating"
   end
 
   create_table "books", force: :cascade do |t|
@@ -33,6 +35,8 @@ ActiveRecord::Schema.define(version: 2021_11_06_205611) do
     t.bigint "author_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "reviews_count"
+    t.float "average_rating"
     t.index ["author_id"], name: "index_books_on_author_id"
   end
 
@@ -40,6 +44,18 @@ ActiveRecord::Schema.define(version: 2021_11_06_205611) do
     t.string "jti", null: false
     t.datetime "expired_at", null: false
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.text "description"
+    t.integer "rating"
+    t.bigint "user_id", null: false
+    t.string "reviewable_type", null: false
+    t.bigint "reviewable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -57,4 +73,5 @@ ActiveRecord::Schema.define(version: 2021_11_06_205611) do
   end
 
   add_foreign_key "books", "authors"
+  add_foreign_key "reviews", "users"
 end

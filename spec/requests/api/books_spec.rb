@@ -14,11 +14,13 @@ RSpec.describe '/api/books' do
         [
           {
             author_id: book.author_id,
+            average_rating: book.average_rating,
             created_at: book.created_at.iso8601(3),
             description: book.description,
             id: book.id,
             publish_date: book.publish_date,
             rating: book.rating,
+            reviews_count: book.reviews_count,
             title: book.title,
             updated_at: book.updated_at.iso8601(3)
           }
@@ -37,11 +39,13 @@ RSpec.describe '/api/books' do
         expect(response_hash).to eq(
           {
             author_id: book.author_id,
+            average_rating: book.average_rating,
             created_at: book.created_at.iso8601(3),
             description: book.description,
             id: book.id,
             publish_date: book.publish_date,
             rating: book.rating,
+            reviews_count: book.reviews_count,
             title: book.title,
             updated_at: book.updated_at.iso8601(3)
           }
@@ -98,7 +102,7 @@ RSpec.describe '/api/books' do
 
         expect(response_hash).to eq(
           {
-            errors: ['Author must exist']
+            errors: ['Author was not found in database']
           }
         )
       end
@@ -144,7 +148,7 @@ RSpec.describe '/api/books' do
 
         expect(response_hash).to eq(
           {
-            errors: ['Description can\'t be blank']
+            errors: ['Description is required']
           }
         )
       end

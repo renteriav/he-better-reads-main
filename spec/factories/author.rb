@@ -7,3 +7,4 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph }
   end
 end
+

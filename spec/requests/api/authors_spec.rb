@@ -13,10 +13,12 @@ RSpec.describe '/api/authors' do
       expect(response_hash).to eq(
         [
           {
+            average_rating: author.average_rating,
             created_at: author.created_at.iso8601(3),
             description: author.description,
             first_name: author.first_name,
             last_name: author.last_name,
+            reviews_count: author.reviews_count,
             genres: author.genres,
             id: author.id,
             updated_at: author.updated_at.iso8601(3),
@@ -36,10 +38,12 @@ RSpec.describe '/api/authors' do
 
         expect(response_hash).to eq(
           {
+            average_rating: author.average_rating,
             created_at: author.created_at.iso8601(3),
             description: author.description,
             first_name: author.first_name,
             last_name: author.last_name,
+            reviews_count: author.reviews_count,
             genres: author.genres,
             id: author.id,
             updated_at: author.updated_at.iso8601(3),
@@ -93,7 +97,7 @@ RSpec.describe '/api/authors' do
 
         expect(response_hash).to eq(
           {
-            errors: ['Description can\'t be blank']
+            errors: ['Description is required']
           }
         )
       end
@@ -149,16 +153,16 @@ RSpec.describe '/api/authors' do
 
         expect(response_hash).to eq(
           {
-            errors: ['Description can\'t be blank']
+            errors: ['Description is required']
           }
         )
       end
     end
 
     context 'When the Authorization header is missing' do
-      it 'returns 401' do
+      it 'returns unauthorized' do
         put "/api/authors/#{author.id}"
-        expect(response.status).to eq(401)
+        expect(response).to be_unauthorized
       end
     end
   end

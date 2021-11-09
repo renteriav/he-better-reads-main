@@ -89,7 +89,7 @@ RSpec.describe '/api/users' do
         expect(response_hash).to eq(
           {
             errors: [
-              'First name can\'t be blank'
+              'First name is required'
             ]
           }
         )
