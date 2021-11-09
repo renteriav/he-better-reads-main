@@ -18,7 +18,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
   gem 'annotate'
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'byebug'
   gem 'factory_bot_rails', '~> 6.2'
   gem 'faker', '~> 2.18'
   gem 'jsonapi-rspec'
