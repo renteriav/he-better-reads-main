@@ -255,7 +255,7 @@ Same as get book reviews.
 ]
 ```
 
-##Other endpoints
+##  Other endpoints
 
 `api/books`
 `api/books/{book_id}`
