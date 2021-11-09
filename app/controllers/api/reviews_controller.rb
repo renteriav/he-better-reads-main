@@ -23,13 +23,13 @@ module API
             # with description. if param[:sort_by_rating] is not present, it sorts by
             # created_at: :desc.
             
-            with_description = true
-            with_description = false if params[:with_description_only] == 'false'
+            with_description_only = true
+            with_description_only = false if params[:with_description_only] == false || params[:with_description_only] == 'false'
 
             reviews = @parent.reviews.order(created_at: :desc)
             reviews = reviews.with_rating(params[:rating]) if params[:rating]
             reviews = reviews.sort_by_rating(params[:sort_by_rating]) if ['asc', 'desc'].include?params[:sort_by_rating]
-            reviews = reviews.with_description if with_description
+            reviews = reviews.with_description_only if with_description_only
 
             render json: reviews
         end
