@@ -191,7 +191,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9
 }
 ```
 
-##Get book reviews
+## Get book reviews
 It returns the reviews for a book. There are three optional parameters that can be included in the call.
 1. **rating** - When this parameter is included, only reviews that match that rating are returned. If the parameter is not a number between 1 and 5, the parameter is ignored.
 2. **sort_by_rating** - When this parameter is included, the reviews are ordered by rating from lowest to highest or highest to lowest. When this parameter is not included, reviews are ordered from most recent to oldest.
@@ -237,7 +237,7 @@ It returns the reviews for a book. There are three optional parameters that can 
 ]
 ```
 
-##Get author reviews
+## Get author reviews
 Same as get book reviews.
 
 ### Request
