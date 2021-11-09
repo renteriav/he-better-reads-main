@@ -29,17 +29,20 @@ In order to add a review we need to obtain a token by either creating a new user
 
 `POST /api/signup`
 
+**user** *hash* required
 **first_name** *string* required
 **last_name** *string* required
 **email** *string* required
 **password** *string* required
 
 ```
-{
+{   
+  "user": {
     "first_name": "John",
     "last_name": "Smith",
     "email": "email@test.com",
     "password": "mypassword"
+  }
 }
 ```
 
@@ -71,6 +74,7 @@ authorization: Bearer eyJhbGciOiJIUzI1NiJ9
 
 `POST /api/login`
 
+**user** *hash* required
 **email** *string* required
 **password** *string* required
 
@@ -78,9 +82,11 @@ Headers
 **Authorization** *token* required
 
 ```
-{
-  "email": "email@test.com",
-  "password": "mypassword"
+{ 
+  "user": {
+    "email": "email@test.com",
+    "password": "mypassword"
+  }
 }
 
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9
