@@ -30,9 +30,13 @@ In order to add a review we need to obtain a token by either creating a new user
 `POST /api/signup`
 
 **user** *hash* required
+
 **first_name** *string* required
+
 **last_name** *string* required
+
 **email** *string* required
+
 **password** *string* required
 
 ```
@@ -75,10 +79,13 @@ authorization: Bearer eyJhbGciOiJIUzI1NiJ9
 `POST /api/login`
 
 **user** *hash* required
+
 **email** *string* required
+
 **password** *string* required
 
 Headers
+
 **Authorization** *token* required
 
 ```
@@ -117,10 +124,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9
 `POST /api/books/{book_id}/reviews`
 
 **book_id** *url param* required
+
 **rating** *integer* required
+
 **description** *string* optional
 
 Headers
+
 **Authorization** *token* required
 
 ```
@@ -151,10 +161,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9
 `POST /api/authors/{author_id}/reviews`
 
 **author_id** *url param* required
+
 **rating** *integer* required
+
 **description** *string* optional
 
 Headers
+
 **Authorization** *token* required
 
 ```
@@ -189,8 +202,11 @@ It returns the reviews for a book. There are three optional parameters that can 
 `GET /api/books/{book_id}/reviews`
 
 **book_id** *url param* required
+
 **rating** *integer* optional
+
 **sort_by_rating** *string* optional (options: asc, desc)
+
 **with_description_only** *string* optional (options: true, false, default: true)
 
 ```
@@ -229,8 +245,11 @@ Same as get book reviews.
 `GET /api/authors/{author_id}/reviews`
 
 **book_id** *url param* required
+
 **rating** *integer* optional
+
 **sort_by_rating** *string* optional (options: asc, desc)
+
 **with_description_only** *string* optional (options: true, false, default: true)
 
 ```
@@ -264,6 +283,9 @@ Same as get book reviews.
 ##  Other endpoints
 
 `api/books`
+
 `api/books/{book_id}`
+
 `api/authors`
+
 `api/authors/{author_id}`
