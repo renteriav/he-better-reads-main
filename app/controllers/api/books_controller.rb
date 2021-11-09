@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module API
   class BooksController < ApplicationController
+    before_action :authenticate_user!, only: %i[create update]
     def create
       book = Book.new(allowed_params)
 

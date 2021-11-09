@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe '/api/users' do
   let(:response_hash) { JSON(response.body, symbolize_names: true) }
 
@@ -13,6 +15,7 @@ RSpec.describe '/api/users' do
             created_at: user.created_at.iso8601(3),
             first_name: user.first_name,
             last_name: user.last_name,
+            email: user.email,
             id: user.id,
             updated_at: user.updated_at.iso8601(3)
           }
@@ -33,6 +36,7 @@ RSpec.describe '/api/users' do
             created_at: user.created_at.iso8601(3),
             first_name: user.first_name,
             last_name: user.last_name,
+            email: user.email,
             id: user.id,
             updated_at: user.updated_at.iso8601(3)
           }
@@ -45,44 +49,6 @@ RSpec.describe '/api/users' do
         get api_user_path(-1)
 
         expect(response).to be_not_found
-      end
-    end
-  end
-
-  describe 'POST to /' do
-    context 'when successful' do
-      let(:params) do
-        {
-          first_name: 'Harry',
-          last_name: 'Potter'
-        }
-      end
-
-      it 'creates an user' do
-        expect { post api_users_path, params: params }.to change { User.count }
-      end
-
-      it 'returns the created user' do
-        post api_users_path, params: params
-
-        expect(response_hash).to include(params)
-      end
-    end
-
-    context 'when unsuccessful' do
-      let(:params) {}
-
-      it 'returns an error' do
-        post api_users_path, params: params
-
-        expect(response_hash).to eq(
-          {
-            errors: [
-              'First name can\'t be blank',
-              'Last name can\'t be blank'
-            ]
-          }
-        )
       end
     end
   end
@@ -123,7 +89,7 @@ RSpec.describe '/api/users' do
         expect(response_hash).to eq(
           {
             errors: [
-              'First name can\'t be blank'
+              'First name is required'
             ]
           }
         )

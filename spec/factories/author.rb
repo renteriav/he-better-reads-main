@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :author do
     first_name { Faker::Name.first_name }
@@ -5,3 +7,4 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph }
   end
 end
+

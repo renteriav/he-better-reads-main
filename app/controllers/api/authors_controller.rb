@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 module API
   class AuthorsController < ApplicationController
+    before_action :authenticate_user!, only: %i[create update]
+
     def create
       author = Author.new(allowed_params)
 
