@@ -35,8 +35,8 @@ class Review < ApplicationRecord
                                     less_than_or_equal_to: 5,
                                     only_integer: true }
 
-  scope :with_rating, ->(rating) { where(rating: rating) }
-  scope :sort_by_rating, ->(order='desc') { reorder(:rating => order) }
+  scope :with_rating, ->(rating) { where(rating: rating) unless rating.nil?}
+  scope :sort_by_rating, ->(order='desc') { reorder(:rating => order) if %w[asc desc].include?(order) }
   scope :with_description_only, -> { where("description <> ''") }
 
   after_save :update_average
