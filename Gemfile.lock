@@ -84,6 +84,9 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
+    debase (0.2.4.1)
+      debase-ruby_core_source (>= 0.10.2)
+    debase-ruby_core_source (0.10.12)
     devise (4.8.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -228,6 +231,8 @@ GEM
       rubocop (>= 1.7.0, < 2.0)
     rubocop-rspec (2.5.0)
       rubocop (~> 1.19)
+    ruby-debug-ide (0.7.3)
+      rake (>= 0.8.1)
     ruby-progressbar (1.11.0)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
@@ -262,6 +267,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
   database_cleaner
+  debase
   devise
   devise-jwt
   factory_bot_rails (~> 6.2)
@@ -278,6 +284,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
+  ruby-debug-ide
 
 RUBY VERSION
    ruby 2.7.3p183
